@@ -10,21 +10,13 @@ class Agent {
         this.initEpisode();
     }
     /**
-     * This method moves the agent one position. It moves the agent to the new position, 
-     * by selecting the next action using the greedy policy. It reports to the caller if
-     * the episode has ended and the reward that this step gives.
+     * This should be implemented by the class that inherits from agent. It should return
+     * an object that contains information abour the reward and if the episode ended in this step.
+     * The object should be in the form of {"isDone": value, "reward": value}.
      * @returns {Object} information on the sate of the agent.
      */
     tick() {
-        let state = this.environment.getState(this.position);
-        const action = this.action;    
-        const stepRes = this.environment.tick(this.position, action);
-        
-        this.position = stepRes.position;
-        state = this.environment.getState(this.position);
-        this.action = this.epsilonGreedyPolicy(state);
-        return {"isDone" : stepRes.isDone,
-                "reward" : stepRes.reward};
+        throw new Error("This method should be implemented by the subclass.");
     }
     /**
      * This methods implements a epsilon-greedy policy, (1 - epsilon) of the time

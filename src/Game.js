@@ -1,19 +1,21 @@
 import React from 'react';
 import Board from './Board.js';
+import Agent from './agent.js';
 
 class Game extends React.Component{
     constructor(props) {
         super(props);
-        console.log(this.props.environment.toBoard());
+        const agent = new Agent(this.props.environment);
         this.state = {
-            board : this.props.environment.toBoard(),
+            agent : agent,
+            board : agent.toBoard(),
         }
 
     }
 
     render() {
         return  <div>
-                    <Board board={this.state.board}/>
+                    <Board board={this.state.agent.toBoard()}/>
                 </div>
     }
 }

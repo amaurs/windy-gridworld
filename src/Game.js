@@ -12,6 +12,23 @@ class Game extends React.Component{
         }
 
     }
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(), 
+            100
+        );
+    }
+    tick() {
+        let stepRes = this.state.agent.tick();
+        if(stepRes.isDone) {
+            this.state.agent.initEpisode();
+            this.setState({episodes: this.state.episodes + 1});
+        }
+        this.setState({board: this.state.agent.toBoard()});
+    }
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
     render() {
         return  <div>
                     <Board board={this.state.agent.toBoard()}/>

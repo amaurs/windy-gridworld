@@ -26,5 +26,20 @@ function  getIcon(key){
                     "%": "🍺"};
     return emojis[key];
 }
+function randomElement(array) 
+{
+  return array[Math.floor(Math.random() * array.length)];
+}  
+function argMax(array) {
+    let argMaxArray = [];
+    let max = Math.max.apply(null, array);
+    for(let i = 0; i < array.length; i++) {
+        if(max === array[i]) {
+            argMaxArray.push(i);
+        }
+    }
+    return argMaxArray;
+}
 
-export {Square, Row};
+
+export {Square, Row, argMax, randomElement};

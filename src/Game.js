@@ -12,7 +12,6 @@ class Game extends React.Component{
         }
 
     }
-
     render() {
         return  <div>
                     <Board board={this.state.agent.toBoard()}/>

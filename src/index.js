@@ -22,10 +22,10 @@ const map = {
 
 ReactDOM.render(
   <Game environment={new Environment(map.height, 
-                             map.width, 
-                             map.boardPlan,
-                             map.wind,
-                             map.agent,
-                             map.goal)} />,
+                                     map.width, 
+                                     map.boardPlan,
+                                     map.wind,
+                                     map.agent,
+                                     map.goal)} />,
   document.getElementById('world')
 );

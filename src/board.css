@@ -1,0 +1,46 @@
+#world{
+   font-family: Courier;
+   white-space: pre-wrap;
+}
+
+.grid_bg {
+    width: 924px;
+    height: 60px;
+    
+}
+
+.grid_bg>div {
+    width: 924px;
+    height: 26px;
+}
+
+.grid_bg>div>div {
+    width: 24px;
+    height: 24px;
+    border-style: solid;
+    border: 1px solid #eee;
+    text-align: center;
+    float: left;
+    font-size: 22px;
+}
+
+#grid_container_bg {
+    width: 84px;
+    height: 60px;
+    
+}
+
+#grid_container_bg>div {
+    width: 84px;
+    height: 26px;
+}
+
+#grid_container_bg>div>div {
+    width: 24px;
+    height: 24px;
+    border-style: solid;
+    text-align: center;
+    border: 1px solid #eee;
+    float: left;
+    font-size: 22px;
+}

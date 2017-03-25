@@ -6,7 +6,9 @@ class Agent {
         this.Q = new Array(this.environment.getNumberOfStates() * this.environment.getNumberOfActions()).fill(0);
         this.position = null;
         this.action = null
-        this.epsilon = .9;
+        this.alpha = 0.8;
+        this.gamma = 0.4;
+        this.epsilon = 0.9;
         this.initEpisode();
     }
     /**
@@ -24,14 +26,14 @@ class Agent {
      * randomly from all the actions. 
      * @returns {number} the index of the selected action.
      */
-    epsilonGreedyPolicy(state) { 
+    epsilonGreedyPolicy(state, epsilon) { 
         const actionsIndex = this.environment.getActions(); 
         let actionStateValue = [];
         for(let i = 0; i < actionsIndex.length; i++) {
             actionStateValue.push(this.Q[this.indexStateAction(state, actionsIndex[i])]);
         }
         const argMaxActions = argMax(actionStateValue);
-        if(Math.random() < 1) {
+        if(Math.random() > epsilon) {
             return randomElement(actionsIndex);
         } else {
             return randomElement(argMaxActions);
@@ -50,7 +52,7 @@ class Agent {
      */
     initEpisode() {
         this.position = this.environment.initEnvironment();
-        this.action = this.epsilonGreedyPolicy(this.environment.getState(this.position));
+        this.action = this.epsilonGreedyPolicy(this.environment.getState(this.position), this.epsilon);
     }
     /**
      * This method will render the current environment including the
@@ -59,6 +61,24 @@ class Agent {
      */
     toBoard() {
         return this.environment.toBoard(this.position);
+    }
+    /**
+     * Helper method to update the value of epsilon.
+     */
+    setEpsilon(epsilon) {
+        this.epsilon = epsilon;
+    }
+    /**
+     * Helper method to update the value of alpha.
+     */
+    setAlpha(alpha) {
+        this.alpha = alpha;
+    }
+    /**
+     * Helper method to update the value of gamma.
+     */
+    setGamma(gamma) {
+        this.gamma = gamma;
     }
 }
 

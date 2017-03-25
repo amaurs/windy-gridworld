@@ -11,7 +11,7 @@ class RandomAgent extends Agent {
         const stepRes = this.environment.tick(this.position, action);
         this.position = stepRes.position;
         const state = this.environment.getState(this.position);
-        this.action = this.epsilonGreedyPolicy(state);
+        this.action = this.epsilonGreedyPolicy(state, this.epsilon);
         return {"isDone" : stepRes.isDone,
                 "reward" : stepRes.reward};
     }

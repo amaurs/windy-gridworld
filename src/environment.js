@@ -6,13 +6,13 @@ const ACTIONS = [new Vector(0, 1),
                  new Vector(1, 0)];
 
 class Environment {
-    constructor(height, width, board) {
+    constructor(height, width, board, wind, agentSymbol, goalSymbol) {
         this.space = board.split("");
         this.width = width;
         this.height = height;
-        this.wind = [0,0,0,1,1,1,2,2,1,0].map((element) => {return (new Vector(0, -1)).times(element)});
-        this.agentSymbol = "o";
-        this.goalSymbol = "%";
+        this.wind = wind.map((element) => {return (new Vector(0, -1)).times(element)});
+        this.agentSymbol = agentSymbol;
+        this.goalSymbol = goalSymbol;
     }
     /**
      * This method moves the state of the agent

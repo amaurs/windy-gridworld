@@ -13,7 +13,7 @@ class SarsaAgent extends Agent {
         const stepRes = this.environment.tick(this.position, action);
         const reward = stepRes.reward;
         const statePrime = this.environment.getState(stepRes.position);
-        const actionPrime = this.epsilonGreedyPolicy(statePrime);
+        const actionPrime = this.epsilonGreedyPolicy(statePrime, this.epsilon);
         this.Q[this.indexStateAction(state, action)] = this.Q[this.indexStateAction(state, action)] + 
                                                        this.alpha * (reward + 
                                                                      this.gamma * this.Q[this.indexStateAction(statePrime, actionPrime)] -

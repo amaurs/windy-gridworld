@@ -30,7 +30,6 @@ class Environment {
         }
         // If the new position reachs the goal we give a positive reward and the episode ends.
         if(this.space[this.getPositionIndex(newPosition)] === this.goalSymbol) {
-            console.log("End of the game.");
             newPosition = this.initEnvironment();
             reward = 10;
             goal = true;

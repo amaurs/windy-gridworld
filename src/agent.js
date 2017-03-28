@@ -31,9 +31,9 @@ class Agent {
         let actionStateValue = [];
         for(let i = 0; i < actionsIndex.length; i++) {
             actionStateValue.push(this.Q[this.indexStateAction(state, actionsIndex[i])]);
-        }
+        }   
         const argMaxActions = argMax(actionStateValue);
-        if(Math.random() > epsilon) {
+        if(Math.random() < epsilon) {
             return randomElement(actionsIndex);
         } else {
             return randomElement(argMaxActions);

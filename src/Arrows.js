@@ -19,7 +19,7 @@ class Arrows extends React.Component {
                 squares.push(<SquareD3 x={x * (+this.props.size + 1)} y={y * (+this.props.size + 1)} size={this.props.size} show={this.props.arrows[this.coordToInt(x, y)]} key={this.coordToInt(x, y)}/>);
             }
         }
-        return  <svg width="250" height="250">
+        return  <svg width={+this.props.width * (+this.props.size + 1)} height={+this.props.height * (+this.props.size + 1)}>
                     <g>
                         <defs><Marker name="arrow"/></defs>
                     </g>

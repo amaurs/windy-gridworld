@@ -1,12 +1,14 @@
 import React from 'react';
 import Board from './Board.js';
+import Arrows from './Arrows.js'
 import { VictoryLine, VictoryChart, VictoryAxis } from 'victory';
-import { Agent } from './sarsaAgent.js';
+import { Agent } from './qLearningAgent.js';
+import { initGrid } from './util.js';
 
 class Game extends React.Component{
     constructor(props) {
         super(props);
-        const epsilon = .1;
+        const epsilon = 0.1;
         const alpha = 0.8;
         const gamma = 0.4;
         const agent = new Agent(this.props.environment);
@@ -31,7 +33,6 @@ class Game extends React.Component{
     init(){
         const epsilon = .1;
         const agent = new Agent(this.props.environment, this.state.epsilon);
-
         this.setState({
             board : agent.toBoard(),
             started : false,
@@ -65,8 +66,9 @@ class Game extends React.Component{
         this.setState({started: true})
         this.timerID = setInterval(
             () => this.tick(), 
-            20
+            50
         );
+        this.state.agent.toActionMap()
     }
     stop() {
         clearInterval(this.timerID);
@@ -88,6 +90,7 @@ class Game extends React.Component{
                     <div>
                         <Board board={this.state.agent.toBoard()}/>
                     </div>
+
                     <div>
                         <h1>Episodes:</h1>
                         <p>{this.state.episodes}</p>
@@ -125,18 +128,7 @@ class Game extends React.Component{
                                onChange={this.handleGammaChange} />
                     </div>
                     <div>
-                    <VictoryChart>
-                        <VictoryAxis
-                         />
-                         <VictoryAxis
-                           dependentAxis
-                         />
-                        <VictoryLine
-                            data={this.state.data}
-                            x="episode"
-                            y="duration"
-                        />
-                    </VictoryChart>
+                        <Arrows height={this.props.environment.height} width={this.props.environment.width}j size="24" arrows={this.state.agent.toActionMap()}/>
                     </div>
 
                 </div>

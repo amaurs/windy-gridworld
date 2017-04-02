@@ -1,9 +1,9 @@
 import Vector from './vector';
 
-const ACTIONS = [new Vector(0, 1),
-                 new Vector(0, -1),
-                 new Vector(-1, 0),
-                 new Vector(1, 0)];
+const ACTIONS = [new Vector(0, 1), //DOWN
+                 new Vector(0, -1), //UP
+                 new Vector(-1, 0), //LEFT
+                 new Vector(1, 0)]; //RIGHT
 
 class Environment {
     constructor(height, width, board, wind, agentSymbol, goalSymbol) {

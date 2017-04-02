@@ -1,16 +1,22 @@
+.arrow{
+    stroke-width:5;
+    stroke:#000;
+    stroke-dasharray:5, 5;
+}
+
 #world{
    font-family: Courier;
    white-space: pre-wrap;
 }
 
 .grid_bg {
-    width: 924px;
+    width: 280px;
     height: 60px;
     
 }
 
 .grid_bg>div {
-    width: 924px;
+    width: 280px;
     height: 26px;
 }
 

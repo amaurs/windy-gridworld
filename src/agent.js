@@ -1,4 +1,5 @@
 import {argMax, randomElement} from './util.js'
+import Vector from './vector.js'
 
 class Agent {
     constructor(environment) {
@@ -8,7 +9,7 @@ class Agent {
         this.action = null
         this.alpha = 0.8;
         this.gamma = 0.4;
-        this.epsilon = 0.9;
+        this.epsilon = 0.1;
         this.initEpisode();
     }
     /**
@@ -26,7 +27,7 @@ class Agent {
      * randomly from all the actions. 
      * @returns {number} the index of the selected action.
      */
-    epsilonGreedyPolicy(state, epsilon) { 
+    epsilonGreedyPolicy(state, epsilon) {
         const actionsIndex = this.environment.getActions(); 
         let actionStateValue = [];
         for(let i = 0; i < actionsIndex.length; i++) {
@@ -34,9 +35,9 @@ class Agent {
         }   
         const argMaxActions = argMax(actionStateValue);
         if(Math.random() < epsilon) {
-            return randomElement(actionsIndex);
+            return actionsIndex;
         } else {
-            return randomElement(argMaxActions);
+            return argMaxActions;
         }
     }
     /**
@@ -52,7 +53,7 @@ class Agent {
      */
     initEpisode() {
         this.position = this.environment.initEnvironment();
-        this.action = this.epsilonGreedyPolicy(this.environment.getState(this.position), this.epsilon);
+        this.action = randomElement(this.epsilonGreedyPolicy(this.environment.getState(this.position), this.epsilon));
     }
     /**
      * This method will render the current environment including the
@@ -61,6 +62,16 @@ class Agent {
      */
     toBoard() {
         return this.environment.toBoard(this.position);
+    }
+    toActionMap() {
+        let map = [];
+        for(let i = 0; i < this.environment.getNumberOfStates(); i++) {
+            // deterministic, I choose the first element of the list
+            let actions = new Array(this.environment.getNumberOfActions()).fill(0);
+            this.epsilonGreedyPolicy(i, 0).map((element)=>{ actions[element] = 1});
+            map.push(actions);
+        }
+        return map;
     }
     /**
      * Helper method to update the value of epsilon.

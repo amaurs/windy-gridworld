@@ -128,7 +128,10 @@ class Game extends React.Component{
                                onChange={this.handleGammaChange} />
                     </div>
                     <div>
-                        <Arrows height={this.props.environment.height} width={this.props.environment.width}j size="40" arrows={this.state.agent.toActionMap()}/>
+                        <Arrows height={this.props.environment.height} 
+                                width={this.props.environment.width}j 
+                                size="40" 
+                                arrows={this.state.agent.toActionMap()}/>
                     </div>
 
                 </div>

@@ -20,12 +20,12 @@ function Row(props) {
 
 function Marker(props) {
     return (
-        <marker id={props.name} refX="3" refY="2" markerWidth="3" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L3,2 Z"></path></marker>
+        <marker id={props.name} viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,-5L10,0L0,5" class="arrowHead"></path></marker>
     );
 }
 
 function SquareD3(props) {
-    const factor = 0.9  * +props.size / 2;
+    const factor = 0.8  * +props.size / 2;
 
     
      return (

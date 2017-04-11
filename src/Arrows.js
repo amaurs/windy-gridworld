@@ -16,10 +16,10 @@ class Arrows extends React.Component {
         let squares = [];
         for(let y = 0; y < this.props.height; y++) {
             for(let x = 0; x < this.props.width; x++) {
-                squares.push(<SquareD3 x={x * (+this.props.size + 1)} y={y * (+this.props.size + 1)} size={this.props.size} show={this.props.arrows[this.coordToInt(x, y)]} key={this.coordToInt(x, y)}/>);
+                squares.push(<SquareD3 x={x * (+this.props.size)} y={y * (+this.props.size)} size={this.props.size} show={this.props.arrows[this.coordToInt(x, y)]} key={this.coordToInt(x, y)}/>);
             }
         }
-        return  <svg width={+this.props.width * (+this.props.size + 1)} height={+this.props.height * (+this.props.size + 1)}>
+        return  <svg className="arrows" width={+this.props.width * (+this.props.size)} height={+this.props.height * (+this.props.size)}>
                     <g>
                         <defs><Marker name="arrow"/></defs>
                     </g>

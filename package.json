@@ -1,6 +1,7 @@
 {
   "name": "windy-gridworld",
   "version": "0.1.0",
+  "homepage": "http://amaurs.com/windy-gridworld",
   "private": true,
   "dependencies": {
     "react": "^15.4.2",

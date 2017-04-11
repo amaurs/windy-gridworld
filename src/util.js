@@ -25,12 +25,12 @@ function Marker(props) {
 }
 
 function SquareD3(props) {
-    const factor = 0.8  * +props.size / 2;
+    const factor = 0.7 * +props.size / 2;
 
     
      return (
         <g>
-          <rect x={props.x} y={props.y} height={props.size} width={props.size} fill="#FFF" stroke="black" strokeWidth="2"></rect>
+          <rect x={props.x} y={props.y} height={props.size} width={props.size} fill="#FFF" stroke="black" strokeWidth="1"></rect>
           <Arrow x1={+props.x + +props.size/2} y1={+props.y + +props.size/2} x2={+props.x + +props.size/2} y2={+props.y + +props.size/2 + factor} marker="url(#arrow)" visibility={+props.show[0] > 0 ? "visible":"hidden"}/> //DOWN
           <Arrow x1={+props.x + +props.size/2} y1={+props.y + +props.size/2} x2={+props.x + +props.size/2} y2={+props.y + +props.size/2 - factor} marker="url(#arrow)" visibility={+props.show[1] > 0 ? "visible":"hidden"}/> //UP
           <Arrow x1={+props.x + +props.size/2} y1={+props.y + +props.size/2} x2={+props.x + +props.size/2 - factor} y2={+props.y + +props.size/2} marker="url(#arrow)" visibility={+props.show[2] > 0 ? "visible":"hidden"}/> //LEFT

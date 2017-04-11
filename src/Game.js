@@ -86,12 +86,16 @@ class Game extends React.Component{
         this.state.agent.setGamma(this.state.gamma);
     }
     render() {
-        return  <div>
-                    <div>
+        return  <div className="container">
+                    <div className="board">
                         <Board board={this.state.agent.toBoard()}/>
+                        <Arrows height={this.props.environment.height} 
+                                width={this.props.environment.width}j 
+                                size="42" 
+                                arrows={this.state.agent.toActionMap()}/>
                     </div>
 
-                    <div>
+                    <div className="controls">
                         <h1>Episodes:</h1>
                         <p>{this.state.episodes}</p>
                         <h1>Episodes Duration:</h1>
@@ -127,13 +131,6 @@ class Game extends React.Component{
                                step="0.01" value={this.state.gamma}  
                                onChange={this.handleGammaChange} />
                     </div>
-                    <div>
-                        <Arrows height={this.props.environment.height} 
-                                width={this.props.environment.width}j 
-                                size="40" 
-                                arrows={this.state.agent.toActionMap()}/>
-                    </div>
-
                 </div>
     }
 }

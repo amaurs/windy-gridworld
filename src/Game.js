@@ -1,7 +1,7 @@
 import React from 'react';
 import Board from './Board.js';
 import Arrows from './Arrows.js'
-import { VictoryLine, VictoryChart, VictoryAxis } from 'victory';
+import { VictoryLine, VictoryLabel, VictoryChart, VictoryAxis } from 'victory';
 import { Agent } from './qLearningAgent.js';
 import { initGrid } from './util.js';
 
@@ -66,7 +66,7 @@ class Game extends React.Component{
         this.setState({started: true})
         this.timerID = setInterval(
             () => this.tick(), 
-            50
+            0
         );
         this.state.agent.toActionMap()
     }
@@ -96,40 +96,66 @@ class Game extends React.Component{
                     </div>
 
                     <div className="controls">
-                        <h1>Episodes:</h1>
-                        <p>{this.state.episodes}</p>
-                        <h1>Episodes Duration:</h1>
-                        <p>{this.state.episodeDuration}</p>
-                        <button onClick={() => this.start()}>
-                            {this.state.started?"Resume":"Start"}
-                        </button>
-                        <button onClick={() => this.stop()}>
-                            Stop
-                        </button>
-                        <button onClick={() => this.init()}>
-                            Reset
-                        </button>
-                        <p>epsilon {this.state.epsilon}:</p>
-                        <input id="epsilon" 
-                               type="range" 
-                               min="0" 
-                               max="1" 
-                               step="0.01" value={this.state.epsilon}  
-                               onChange={this.handleEpsilonChange} />
-                        <p>alpha {this.state.alpha}:</p>
-                        <input id="alpha" 
-                               type="range" 
-                               min="0" 
-                               max="1" 
-                               step="0.01" value={this.state.alpha}  
-                               onChange={this.handleAlphaChange} />
-                        <p>gamma {this.state.gamma}:</p>
-                        <input id="gamma" 
-                               type="range" 
-                               min="0" 
-                               max="1" 
-                               step="0.01" value={this.state.gamma}  
-                               onChange={this.handleGammaChange} />
+                        <div className="col-third">
+                            <div className="buttons">
+                                <button onClick={() => this.start()}>
+                                    {this.state.started?"Resume":"Start"}
+                                </button>
+                                <button onClick={() => this.stop()}>
+                                    Stop
+                                </button>
+                                <button onClick={() => this.init()}>
+                                    Reset
+                                </button>
+                            </div>
+                            <div className="info">
+                                <p>Episodes: {this.state.episodes}</p>
+                                <p>Episodes Duration: {this.state.episodeDuration}</p>
+                            </div>
+                        </div>
+                        <div className="col-third">
+                            <div className="center">
+                                <p>epsilon {this.state.epsilon}:</p>
+                                <input id="epsilon" 
+                                       type="range" 
+                                       min="0" 
+                                       max="1" 
+                                       step="0.01" value={this.state.epsilon}  
+                                       onChange={this.handleEpsilonChange} />
+                                <p>alpha {this.state.alpha}:</p>
+                                <input id="alpha" 
+                                       type="range" 
+                                       min="0" 
+                                       max="1" 
+                                       step="0.01" value={this.state.alpha}  
+                                       onChange={this.handleAlphaChange} />
+                                <p>gamma {this.state.gamma}:</p>
+                                <input id="gamma" 
+                                       type="range" 
+                                       min="0" 
+                                       max="1" 
+                                       step="0.01" value={this.state.gamma}  
+                                       onChange={this.handleGammaChange} />
+                                </div>
+                        </div>
+                        <div className="col-third">
+                            <VictoryChart style={{parent: {
+                                  boxSizing: "border-box",
+                                  display: "inline",
+                                  padding: 0,
+                                  margin: 20,
+                                  fontFamily: "'Fira Sans', sans-serif"
+                                }}}>
+
+                                <VictoryLine
+                                    data={this.state.data}
+                                    x="episode"
+                                    y="duration"
+                                    style={{data: {stroke: "black", strokeWidth: 4.5}}}
+                                />
+
+                            </VictoryChart>
+                        </div>
                     </div>
                 </div>
     }

@@ -20,7 +20,7 @@ function Row(props) {
 
 function Marker(props) {
     return (
-        <marker id={props.name} viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,-5L10,0L0,5" class="arrowHead"></path></marker>
+        <marker id={props.name} viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,-5L10,0L0,5" className="arrowHead"></path></marker>
     );
 }
 

@@ -8,10 +8,19 @@
    font-family: Courier;
    white-space: pre-wrap;
 }
-
+.center {
+    width: 50%;
+    margin:auto;
+}
 .container {
     width: 840px;
+    height: 540px;
     margin:auto;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0; 
 }
 .controls {
     width: 840px;
@@ -28,13 +37,21 @@
     height: 294px;
     float:left;
 }
-
+.col-third {
+    width: 33%; 
+    float:left;
+}
 .grid_bg {
     width: 420px;
     height: 294px;
     float:left;
 }
-
+.buttons {
+    margin-top:25px;
+    margin-bottom:25px;
+}
+.info {
+}
 .grid_bg>div {
     width: 420px;
     height: 42px;

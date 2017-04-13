@@ -30,7 +30,7 @@ function SquareD3(props) {
     
      return (
         <g>
-          <rect x={props.x} y={props.y} height={props.size} width={props.size} fill="#FFF" stroke="black" strokeWidth="1"></rect>
+          <rect className={props.className} x={props.x} y={props.y} height={props.size} width={props.size} fill="#fff" stroke="#eee" strokeWidth="1"></rect>
           <Arrow x1={+props.x + +props.size/2} y1={+props.y + +props.size/2} x2={+props.x + +props.size/2} y2={+props.y + +props.size/2 + factor} marker="url(#arrow)" visibility={+props.show[0] > 0 ? "visible":"hidden"}/> //DOWN
           <Arrow x1={+props.x + +props.size/2} y1={+props.y + +props.size/2} x2={+props.x + +props.size/2} y2={+props.y + +props.size/2 - factor} marker="url(#arrow)" visibility={+props.show[1] > 0 ? "visible":"hidden"}/> //UP
           <Arrow x1={+props.x + +props.size/2} y1={+props.y + +props.size/2} x2={+props.x + +props.size/2 - factor} y2={+props.y + +props.size/2} marker="url(#arrow)" visibility={+props.show[2] > 0 ? "visible":"hidden"}/> //LEFT
@@ -41,7 +41,7 @@ function SquareD3(props) {
 
 function Arrow(props) { 
     return (
-        <line x1={props.x1} y1={props.y1} x2={props.x2} y2={props.y2} stroke="black" strokeWidth="2" markerEnd={props.marker} visibility={props.visibility}></line>
+        <line x1={props.x1} y1={props.y1} x2={props.x2} y2={props.y2} stroke="#0C090D" strokeWidth="2" markerEnd={props.marker} visibility={props.visibility}></line>
     );
 }
 

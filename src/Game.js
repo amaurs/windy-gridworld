@@ -40,7 +40,8 @@ class Game extends React.Component{
             epsilon : epsilon,
             wins : 0,
             crashes : 0,
-            episodes : 0})
+            episodes : 0,
+            episodeDuration : 0,})
     }
     componentDidMount() {
 
@@ -90,16 +91,16 @@ class Game extends React.Component{
                     <div className="board">
                         <Board board={this.state.agent.toBoard()}/>
                         <Arrows height={this.props.environment.height} 
-                                width={this.props.environment.width}j 
+                                width={this.props.environment.width}
+                                agent={this.state.agent.position} 
                                 size="42" 
                                 arrows={this.state.agent.toActionMap()}/>
                     </div>
-
                     <div className="controls">
                         <div className="col-third">
                             <div className="buttons">
                                 <button onClick={() => this.start()}>
-                                    {this.state.started?"Resume":"Start"}
+                                    Start
                                 </button>
                                 <button onClick={() => this.stop()}>
                                     Stop
@@ -109,8 +110,8 @@ class Game extends React.Component{
                                 </button>
                             </div>
                             <div className="info">
-                                <p>Episodes: {this.state.episodes}</p>
-                                <p>Episodes Duration: {this.state.episodeDuration}</p>
+                                <p>🕹 {this.state.episodes}</p>
+                                <p>⏱ {this.state.episodeDuration}</p>
                             </div>
                         </div>
                         <div className="col-third">
@@ -143,15 +144,29 @@ class Game extends React.Component{
                                   boxSizing: "border-box",
                                   display: "inline",
                                   padding: 0,
-                                  margin: 20,
-                                  fontFamily: "'Fira Sans', sans-serif"
+                                  margin: 30,
+                                  fontFamily: "'Futura', sans-serif",
+                                  stroke: "#0C090D", 
+                                  strokeWidth: 3
                                 }}}>
+
+                                <VictoryLabel x={8} y={170}
+                                    text={"EPISODES"}
+                                    transform={"rotate(270,8,170)"}
+                                    style={{fill: "#0C090D",
+                                            fontStyle: "bold"}}
+                                />
+                                <VictoryLabel x={220} y={285}
+                                    text={"DURATION"}
+                                    style={{fill: "#0C090D",
+                                            fontStyle: "bold"}}
+                                />
 
                                 <VictoryLine
                                     data={this.state.data}
                                     x="episode"
                                     y="duration"
-                                    style={{data: {stroke: "black", strokeWidth: 4.5}}}
+                                    style={{data: {stroke: "#53B3CB", strokeWidth: 3}}}
                                 />
 
                             </VictoryChart>

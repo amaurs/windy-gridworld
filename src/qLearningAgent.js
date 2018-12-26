@@ -19,7 +19,7 @@ class QLearningAgent extends Agent {
         const statePrime = this.environment.getState(stepRes.position);
         let qActionValues = [];
         for(let i=0; i < this.environment.getNumberOfActions(); i++) {
-            qActionValues.push(this.Q[this.indexStateAction(state, i)]);
+            qActionValues.push(this.Q[this.indexStateAction(statePrime, i)]);
         }
         const argMaxAction = randomElement(argMax(qActionValues));
         this.Q[this.indexStateAction(state, action)] = this.Q[this.indexStateAction(state, action)] + 

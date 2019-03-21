@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
 import Environment from './environment';
+import Controller from './controller';
+import { Agent } from './qLearningAgent.js';
 import './board.css';
 
 const map = {
@@ -19,13 +21,18 @@ const map = {
              goal : "%"
          };
 
-
-ReactDOM.render(
-  <Game environment={new Environment(map.height, 
+const environment = new Environment(map.height, 
                                      map.width, 
                                      map.boardPlan,
                                      map.wind,
                                      map.agent,
-                                     map.goal)} />,
+                                     map.goal)
+
+const agent = new Agent(environment);
+
+const controller = new Controller(environment, agent)
+
+ReactDOM.render(
+  <Game controller={controller} />,
   document.getElementById('world')
 );

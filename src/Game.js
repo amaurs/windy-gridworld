@@ -11,11 +11,10 @@ class Game extends React.Component{
         const epsilon = 0.1;
         const alpha = 0.8;
         const gamma = 0.4;
-        const agent = new Agent(this.props.environment);
         this.state = {
             started : false,
-            agent : agent,
-            board : agent.toBoard(),
+            board : this.props.controller.toBoard(),
+            controller : this.props.controller,
             epsilon : epsilon,
             gamma : gamma,
             alpha : alpha,
@@ -32,11 +31,8 @@ class Game extends React.Component{
     }
     init(){
         const epsilon = .1;
-        const agent = new Agent(this.props.environment, this.state.epsilon);
         this.setState({
-            board : agent.toBoard(),
             started : false,
-            agent : agent,
             epsilon : epsilon,
             wins : 0,
             crashes : 0,
@@ -47,18 +43,18 @@ class Game extends React.Component{
 
     }
     tick() {
-        let stepRes = this.state.agent.tick();
+        let stepRes = this.props.controller.tick();
         this.setState({episodeDuration: this.state.episodeDuration + 1});
         if(stepRes.isDone) {
             this.setState({episodes: this.state.episodes + 1});
-            this.state.agent.initEpisode();
+            this.props.controller.initEpisode();
             let newData = this.state.data.slice();
             newData.push({episode : this.state.episodes, duration: this.state.episodeDuration});
             this.setState({data: newData});
             
             this.setState({episodeDuration: 0});
         }
-        this.setState({board: this.state.agent.toBoard()});
+        this.setState({board: this.props.controller.toBoard()});
     }
     componentWillUnmount() {
         clearInterval(this.timerID);
@@ -69,32 +65,32 @@ class Game extends React.Component{
             () => this.tick(), 
             0
         );
-        this.state.agent.toActionMap()
+        this.props.controller.toActionMap()
     }
     stop() {
         clearInterval(this.timerID);
     }
     handleEpsilonChange(event) {
         this.setState({epsilon: event.target.value});
-        this.state.agent.setEpsilon(this.state.epsilon);
+        this.props.controller.setEpsilon(this.state.epsilon);
     }
     handleAlphaChange(event) {
         this.setState({alpha: event.target.value});
-        this.state.agent.setAlpha(this.state.alpha);
+        this.props.controller.setAlpha(this.state.alpha);
     }
     handleGammaChange(event) {
         this.setState({gamma: event.target.value});
-        this.state.agent.setGamma(this.state.gamma);
+        this.props.controller.setGamma(this.state.gamma);
     }
     render() {
         return  <div className="container">
                     <div className="board">
-                        <Board board={this.state.agent.toBoard()}/>
-                        <Arrows height={this.props.environment.height} 
-                                width={this.props.environment.width}
-                                agent={this.state.agent.position} 
+                        <Board board={this.props.controller.toBoard()}/>
+                        <Arrows height={this.props.controller.height()} 
+                                width={this.props.controller.width()}
+                                agent={this.props.controller.position()} 
                                 size="42" 
-                                arrows={this.state.agent.toActionMap()}/>
+                                arrows={this.props.controller.toActionMap()}/>
                     </div>
                     <div className="controls">
                         <div className="col-third">

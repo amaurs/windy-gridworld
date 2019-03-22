@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
-import Environment from './environment';
+import { Environment } from './environment';
 import Controller from './controller';
-import { Agent } from './qLearningAgent.js';
+import { Agent } from './randomAgent.js';
 import './board.css';
 
 const map = {
@@ -28,7 +28,7 @@ const environment = new Environment(map.height,
                                      map.agent,
                                      map.goal)
 
-const agent = new Agent(environment);
+const agent = new Agent(environment.getNumberOfActions(), environment.getNumberOfStates());
 
 const controller = new Controller(environment, agent)
 

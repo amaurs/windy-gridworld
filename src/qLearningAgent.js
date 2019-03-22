@@ -1,4 +1,4 @@
-import Agent from './agent';
+import { Agent } from './agent';
 import {argMax, randomElement} from './util.js'
 
 class QLearningAgent extends Agent {
@@ -13,12 +13,19 @@ class QLearningAgent extends Agent {
      */
     tick() {
         const state = this.environment.getState(this.position);
+        
+
         const action = randomElement(this.epsilonGreedyPolicy(state, this.epsilon));
+        
+
         const stepRes = this.environment.tick(this.position, action);
+        
         const reward = stepRes.reward;
+        
+
         const statePrime = this.environment.getState(stepRes.position);
         let qActionValues = [];
-        for(let i=0; i < this.environment.getNumberOfActions(); i++) {
+        for(let i=0; i < this.numberOfActions; i++) {
             qActionValues.push(this.Q[this.indexStateAction(statePrime, i)]);
         }
         const argMaxAction = randomElement(argMax(qActionValues));

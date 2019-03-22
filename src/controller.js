@@ -8,11 +8,13 @@ class Controller {
     }
 
     toBoard() {
-        return this.agent.toBoard();
+        return this.environment.toBoard();
     }
 
     tick() {
-        return this.agent.tick();
+
+        console.log("hello")
+        return this.agent.tick(this.environment);
     }
 
     initEpisode() {
@@ -36,7 +38,7 @@ class Controller {
     }
 
     position() {
-        return this.agent.position;
+        return this.environment.agentPosition;
     }
 
     height() {

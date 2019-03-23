@@ -60,6 +60,12 @@ function randomElement(array)
 {
   return array[Math.floor(Math.random() * array.length)];
 }  
+
+function randomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+
 function argMax(array) {
     let argMaxArray = [];
     let max = Math.max.apply(null, array);
@@ -71,4 +77,6 @@ function argMax(array) {
     return argMaxArray;
 }
 
-export {Square, Row, Marker, SquareD3, Arrow, argMax, randomElement};
+export {Square, Row, Marker, SquareD3, Arrow, argMax, randomElement, randomInt};
+
+

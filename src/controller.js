@@ -18,7 +18,7 @@ class Controller {
     }
 
     initEpisode() {
-        return this.agent.initEpisode();
+        return this.environment.initEnvironment();
     }
 
     toActionMap() {

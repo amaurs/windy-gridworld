@@ -1,26 +1,24 @@
-import Agent from './agent';
-import {argMax, randomElement} from './util.js'
+import { Agent } from './agent';
+import { argMax, randomElement } from './util.js'
 
 class DoubleQLearningAgent extends Agent {
-    constructor(environment) {
-        super(environment);
-        this.environment = environment;
-        this.Q = new Array(this.environment.getNumberOfStates() * this.environment.getNumberOfActions()).fill(0);
-        this.Q2 = new Array(this.environment.getNumberOfStates() * this.environment.getNumberOfActions()).fill(0);
-        this.initEpisode();
+    constructor(numberOfActions, numberOfStates) {
+        super(numberOfActions, numberOfStates);
+        this.Q = new Array(numberOfStates * numberOfActions).fill(0);
+        this.Q2 = new Array(numberOfStates * numberOfActions).fill(0);
     }
     /**
      * 
      * @returns {Object} information on the sate of the agent.
      */
-    tick() {
-        const state = this.environment.getState(this.position);
+    tick(environment) {
+        const state = environment.getState(this.position);
         const action = randomElement(this.epsilonGreedyPolicy(state, this.epsilon));
-        const stepRes = this.environment.tick(this.position, action);
+        const stepRes = environment.tick(action);
         const reward = stepRes.reward;
-        const statePrime = this.environment.getState(stepRes.position);
+        const statePrime = environment.getState(stepRes.position);
         let qActionValues = [];
-        for(let i=0; i < this.environment.getNumberOfActions(); i++) {
+        for(let i=0; i < this.numberOfActions; i++) {
             qActionValues.push(this.Q[this.indexStateAction(state, i)]);
         }
         const argMaxAction = randomElement(argMax(qActionValues));
@@ -37,21 +35,22 @@ class DoubleQLearningAgent extends Agent {
                                                                      this.Q2[this.indexStateAction(state, action)]);
         }
         
-        this.position = stepRes.position;
         return {"isDone" : stepRes.isDone,
                 "reward" : stepRes.reward};
     }
+
     /**
      * This methods implements a epsilon-greedy policy, (1 - epsilon) of the time
      * it selects the action that has the best return, the rest of the time it selects
      * randomly from all the actions. 
      * @returns {number} the index of the selected action.
      */
-    epsilonGreedyPolicy(state, epsilon, deterministic=false) {
-        const actionsIndex = this.environment.getActions(); 
+    epsilonGreedyPolicy(state, epsilon) {
+        const actionsIndex = []; 
         let actionStateValue = [];
-        for(let i = 0; i < actionsIndex.length; i++) {
-            actionStateValue.push(this.Q[this.indexStateAction(state, actionsIndex[i])] + this.Q2[this.indexStateAction(state, actionsIndex[i])]);
+        for(let i = 0; i < this.numberOfActions; i++) {
+            actionStateValue.push(this.Q[this.indexStateAction(state, i)] + this.Q2[this.indexStateAction(state, i)]);
+            actionsIndex.push(i); // There should be a cleaner way to accomplish this.
         }   
         const argMaxActions = argMax(actionStateValue);
         if(Math.random() < epsilon) {

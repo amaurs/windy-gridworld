@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './Game.js';
-import { Environment, map} from './windyGridworld.js';
+import { Environment, map} from './electronicLife.js';
 import Controller from './controller';
 import { Agent } from './qLearningAgent.js';
 import './board.css';

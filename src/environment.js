@@ -1,7 +1,9 @@
 
 
 class Environment {
-    constructor() {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -40,11 +42,11 @@ class Environment {
     }
 
     getHeight() {
-        throw new Error("This method should be implemented by the subclass.");
+        return this.height;
     }
 
     getWidth() {
-        throw new Error("This method should be implemented by the subclass.");
+        return this.width;
     }
 }
 

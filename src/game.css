@@ -1,0 +1,74 @@
+
+
+.info > p {
+    font-size: 36px;
+    margin:0px;
+}
+
+.arrow{
+    stroke-width:5;
+    stroke:#000;
+    stroke-dasharray:5, 5;
+}
+
+#world{
+   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+   white-space: pre-wrap;
+}
+.center {
+    width: 50%;
+    margin:auto;
+}
+.container {
+}
+.controls {
+    width: 840px;
+    height: 744px;
+    float:left; 
+}
+.board { 
+    width: 840px;
+    height: 294px;
+    float:left;
+}
+.arrows {
+    width: 420px;
+    height: 294px;
+    float:left;
+}
+.col-third {
+    width: 33%; 
+    float:left;
+}
+
+.buttons {
+    margin-top:25px;
+    margin-bottom:25px;
+    display:flex;
+}
+
+button {
+    background-color: #E01A4F;
+    border: none;
+    color: white;
+    flex: 1 1 auto;
+    padding: 12px 0px;
+    margin: 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight:bold;
+    text-transform: uppercase;
+}
+
+
+.agent {
+    fill:#F9C22E;
+}
+.red {
+    background-color: rgb(255,155,155);
+}
+.green {
+    background-color: rgb(155,255,155);
+}

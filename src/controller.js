@@ -8,7 +8,8 @@ class Controller {
     }
 
     toBoard() {
-        return this.environment.toBoard();
+        let board = this.environment.toBoard();
+        return board;
     }
 
     initEpisode() {

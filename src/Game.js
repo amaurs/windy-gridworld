@@ -4,6 +4,7 @@ import Arrows from './Arrows.js'
 import { VictoryLine, VictoryLabel, VictoryChart, VictoryAxis } from 'victory';
 import { Agent } from './qLearningAgent.js';
 import { initGrid } from './util.js';
+import './game.css';
 
 class Game extends React.Component{
     constructor(props) {

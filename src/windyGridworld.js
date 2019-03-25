@@ -137,13 +137,7 @@ class WindyGridworld extends Environment {
     }
 
 
-    getHeight() {
-        return this.height;
-    }
 
-    getWidth() {
-        return this.width;
-    }
 
 }
 

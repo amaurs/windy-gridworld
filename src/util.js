@@ -53,7 +53,11 @@ function Arrow(props) {
  */
 function  getIcon(key){
     const emojis = {"o": "🤖", 
-                    "%": "🍺"};
+                    "#": "🌵" , 
+                    "o": "🐑", 
+                    "%": "🌹",
+                    "*": "🌹",
+                    "$": "🐯"  };
     return emojis[key];
 }
 function randomElement(array) 

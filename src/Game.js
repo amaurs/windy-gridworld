@@ -86,11 +86,6 @@ class Game extends React.Component{
         return  <div className="container">
                     <div className="board">
                         <Board board={this.props.controller.toBoard()}/>
-                        <Arrows height={this.props.controller.height()} 
-                                width={this.props.controller.width()}
-                                agent={this.props.controller.position()} 
-                                size="42" 
-                                arrows={this.props.controller.toActionMap()}/>
                     </div>
                     <div className="controls">
                         <div className="col-third">

@@ -11,18 +11,20 @@ class Controller {
         return this.environment.toBoard();
     }
 
-    tick() {
-
-        console.log("hello")
-        return this.agent.tick(this.environment);
-    }
-
     initEpisode() {
         return this.environment.initEnvironment();
     }
 
-    toActionMap() {
-        return this.agent.toActionMap();
+    height() {
+        return this.environment.getHeight();
+    }
+
+    width() {
+        return this.environment.getWidth();
+    }
+
+    tick() {
+        return this.agent.tick(this.environment);
     }
 
     setEpsilon(epsilon) {
@@ -37,16 +39,8 @@ class Controller {
         return this.agent.setGamma(gamma);
     }
 
-    position() {
-        return this.environment.agentPosition;
-    }
-
-    height() {
-        return this.environment.height;
-    }
-
-    width() {
-        return this.environment.width;
+    toActionMap() {
+        return this.agent.toActionMap();
     }
 
 }

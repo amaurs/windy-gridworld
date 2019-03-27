@@ -12,7 +12,7 @@ class Environment {
      * be in.
      * @returns {number} the index of the position in the array that represents the world.
      */
-    getState(agentPosition){
+    getState(){
         throw new Error("This method should be implemented by the subclass.");
     }
 

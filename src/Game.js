@@ -64,7 +64,7 @@ class Game extends React.Component{
         this.setState({started: true})
         this.timerID = setInterval(
             () => this.tick(), 
-            0
+        100
         );
         this.props.controller.toActionMap()
     }

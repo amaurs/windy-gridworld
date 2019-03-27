@@ -136,9 +136,6 @@ class WindyGridworld extends Environment {
         return copy;
     }
 
-
-
-
 }
 
 

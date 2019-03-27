@@ -23,6 +23,11 @@ class Vector {
         }
         return new Vector(x, y);
     }
+
+    plus(other) {
+        return new Vector(this.x + other.x, this.y + other.y);
+    }
+
     /**
      * Helper method for debugging.
      * @returns {string} the representation of this object.

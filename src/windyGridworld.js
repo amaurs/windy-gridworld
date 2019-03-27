@@ -96,7 +96,7 @@ class WindyGridworld extends Environment {
      * be in.
      * @returns {number} the index of the position in the array that represents the world.
      */
-    getState(agentPosition){
+    getState(){
         console.log("Deprecated, should use getPositionIndex instead");
         return this._getPositionIndex(this.agentPosition);
     }

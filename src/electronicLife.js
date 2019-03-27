@@ -5,7 +5,7 @@ import { randomElement } from './util.js';
 const plan  =           ["#################################################",
                          "#    #     #                                    #",
                          "#                      o    o                   #",
-                         "#     o   *            o               o    $   #",
+                         "#     o   *            o               o        #",
                          "#         *#####       o                        #",
                          "#         *#   #       o    ###                 #",
                          "#   o        ##        o   #  #            ##   #",
@@ -16,7 +16,7 @@ const plan  =           ["#################################################",
                          "#             *               #                 #",
                          "#    ####                     #       *         #",
                          "#    ##     * *       #     o                   #",
-                         "#    #    *****                     $      ###  #",
+                         "#    #    *****                            ###  #",
                          "#     #             $                 *         #",
                          "#         *#   # *           #    #   *         #",
                          "#     o      ## *                #    *    ##   #",
@@ -147,7 +147,6 @@ class World {
 
     toString() {
         let stringMap = [];
-        ////console.log(this.grid);
         for(let y = 0; y < this.grid.height; y++){
             let row = "";
             for(let x = 0; x < this.grid.width; x++){
@@ -167,6 +166,10 @@ class LifeLikeWorld extends World {
 
     letAct(critter, vector) {
         let action = critter.act(new View(this, vector));
+        if(critter.constructor.name === "PlantEaterEater")
+            //debugger
+            console.log(critter)
+
         let handled = action &&
                       action.type in this &&
                       this[action.type].call(this, critter, vector, action);
@@ -211,7 +214,7 @@ class LifeLikeWorld extends World {
         let baby = elementFromChar(this.legend, critter.originChar);
         let dest = this.checkDestination(action, vector);
         if(dest == null ||
-                critter.energy <=2 * baby.energy ||
+                //critter.energy <= 2 * baby.energy ||
                 this.grid.get(dest) != null) {
             return false;
         }
@@ -302,17 +305,18 @@ class Plant extends Critter {
 class PlantEater extends Critter {
     constructor() {
         super();
-        this.energy = 20;
+        this.energy = 100;
         this.food = "*";
+        this.reproduceLimit = 60;
     }
 
     act(context) {
         let space = context.find(" ");
-        if(this.energy > 60 && space)
+        let food = context.find(this.food);
+        if(this.energy > this.reproduceLimit && space)
         {
             return {type: "reproduce", direction: space};
         }
-        let food = context.find(this.food);
         if(food)
         {
             return {type: "eat", direction: food};
@@ -327,8 +331,9 @@ class PlantEater extends Critter {
 class PlantEaterEater extends PlantEater {
     constructor() {
         super();
-        this.energy = 50;
+        this.energy = 100;
         this.food = "o";
+        this.reproduceLimit = 40;
     }
 }
 

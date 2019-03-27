@@ -12,11 +12,11 @@ class DoubleQLearningAgent extends Agent {
      * @returns {Object} information on the sate of the agent.
      */
     tick(environment) {
-        const state = environment.getState(this.position);
+        const state = environment.getState();
         const action = randomElement(this.epsilonGreedyPolicy(state, this.epsilon));
         const stepRes = environment.tick(action);
         const reward = stepRes.reward;
-        const statePrime = environment.getState(stepRes.position);
+        const statePrime = environment.getState();
         let qActionValues = [];
         for(let i=0; i < this.numberOfActions; i++) {
             qActionValues.push(this.Q[this.indexStateAction(state, i)]);
@@ -64,7 +64,7 @@ class DoubleQLearningAgent extends Agent {
      * environment where to start.
      */
     initEpisode() {
-        this.position = this.environment.initEnvironment();
+       this.environment.initEnvironment();
     }
 }
 

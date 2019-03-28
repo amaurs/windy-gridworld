@@ -1,19 +1,19 @@
 
 
 .grid_bg {
-    display: flex;
+
 }
 
 .grid_bg > div {
-    
+    display: flex;
+    flex-direction: row
 }
 
 .grid_bg > div > div {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-style: solid;
     border: 1px solid #eee;
     text-align: center;
-    float: left;
-    font-size: 36px;
+    font-size: 24px;
 }

@@ -108,6 +108,7 @@ class World {
         let grid = new Grid(map[0].length, map.length);
         this.grid = grid;
         this.legend = legend;
+        this.time = 0;
         map.forEach(function (line, y) {
             for (let x = 0; x < line.length; x++){
                 grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
@@ -117,12 +118,31 @@ class World {
 
     turn() {
         const acted = [];
+        let time = this.time;
+        let census = {};
         this.grid.forEach(function(critter, vector) {
             if (critter.act && acted.indexOf(critter) == -1) {
                 acted.push(critter);
-                this.letAct(critter, vector);
+                let example = time % critter.speed;
+                if(example == 0) {
+                    this.letAct(critter, vector);                    
+                }   
+                critter.growOlder();
+                if(!critter.isAlive()) {
+                    this.grid.set(vector , null);
+                }
+
+                let currentCritter = critter.constructor.name;
+                if(census.hasOwnProperty(currentCritter)) {
+                    census[currentCritter] += 1;
+                } else {
+                    census[currentCritter] = 1;
+                }
+
             }
         }, this);
+        this.time++;
+        return census;
     }
 
     letAct(critter, vector) {
@@ -166,9 +186,6 @@ class LifeLikeWorld extends World {
 
     letAct(critter, vector) {
         let action = critter.act(new View(this, vector));
-        if(critter.constructor.name === "PlantEaterEater")
-            //debugger
-            console.log(critter)
 
         let handled = action &&
                       action.type in this &&
@@ -264,21 +281,27 @@ class View {
 
 class Critter {
     constructor() {
-
+        this.speed = 1;
+        this.age = 0;
+        this.ageLimit = 50;
     }
 
     act() {
 
     }
+
+    growOlder() {
+        this.age++;
+    }
+
+    isAlive() {
+        return (this.age < this.ageLimit);
+    }
+
 }
 
-class Wall extends  Critter {
+class Wall {
     constructor() {
-        super();
-    }
-
-    act() {
-
     }
 }
 
@@ -286,6 +309,7 @@ class Plant extends Critter {
     constructor() {
         super();
         this.energy = 3 + Math.random() * 4;
+        this.speed = 1;
     }
 
     act(context) {
@@ -300,6 +324,8 @@ class Plant extends Critter {
             return {type: "grow"};
         }
     }
+
+
 }
 
 class PlantEater extends Critter {
@@ -308,6 +334,7 @@ class PlantEater extends Critter {
         this.energy = 100;
         this.food = "*";
         this.reproduceLimit = 60;
+        this.speed = 3;
     }
 
     act(context) {
@@ -326,6 +353,8 @@ class PlantEater extends Critter {
             return {type: "move", direction: space};
         }
     }
+
+
 }
 
 class PlantEaterEater extends PlantEater {
@@ -334,7 +363,9 @@ class PlantEaterEater extends PlantEater {
         this.energy = 100;
         this.food = "o";
         this.reproduceLimit = 40;
+        this.speed = 2;
     }
+
 }
 
 class ElectronicLife extends Environment {
@@ -353,9 +384,11 @@ class ElectronicLife extends Environment {
     }
 
     tick(actionIndex) {
-        this.world.turn();
+        let census = this.world.turn();
 
-        return {"isDone" : false,
+
+
+        return {"isDone" : (Object.keys(census).length < 3),
                 "reward" : 1};
     }
 
@@ -382,6 +415,15 @@ class ElectronicLife extends Environment {
 
     getState(){
         return 0;
+    }
+
+    initEnvironment() {
+        this.world = new LifeLikeWorld(plan, {
+                                              "#": Wall,
+                                              "o": PlantEater,
+                                              "$": PlantEaterEater,
+                                              "*": Plant
+                                              });
     }
 
 }

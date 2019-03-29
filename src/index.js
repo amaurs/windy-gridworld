@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Game from './Game.js';
 import { Environment, map} from './electronicLife.js';
 import Controller from './controller';
-import { Agent } from './doubleQLearningAgent.js';
+import { Agent } from './randomAgent.js';
 import './board.css';
 
 

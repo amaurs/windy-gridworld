@@ -67,7 +67,26 @@ function charFromElement(element){
     }
 }
 
+function createStateMap2() {
+    let mapping = {};
+    for(let i = 0; i < 100 + 1; i++) {
+        mapping[(100 - i) + "-" + i] = i;
+    }
+    return mapping;
+}
 
+
+function createStateMap3() {
+    let mapping = {};
+    let count = 0;
+    for(let i = 0; i < 100 + 1; i++) {
+        for(let j = 0; j < i + 1; j++) {
+            count++;
+            mapping[(100 - i) + "-" + (i - j) + "-" + j] = count;
+        }
+    }
+    return mapping;
+}
 
 
 class Grid {
@@ -373,7 +392,8 @@ class ElectronicLife extends Environment {
     constructor() {
         super(plan[0].length, plan.length);
         this.space = plan;
-
+        this.stateMapping = createStateMap3();
+        
         this.world = new LifeLikeWorld(plan, {
                                               "#": Wall,
                                               "o": PlantEater,
@@ -381,14 +401,27 @@ class ElectronicLife extends Environment {
                                               "*": Plant
                                               });
 
+        this.makeCensus();
+
+
+    }
+
+    makeCensus() {
+        let current  = this.toBoard().map(function(row) {
+            return row.join("");
+        }).join("");
+        this.plantN = (current.match(/o/g) || []).length;
+        this.plantEaterN = (current.match(/\$/g) || []).length;
+        this.plantEaterEaterN = (current.match(/\*/g) || []).length;
+
     }
 
     tick(actionIndex) {
-        let census = this.world.turn();
+        this.world.turn();
 
+        this.makeCensus();
 
-
-        return {"isDone" : (Object.keys(census).length < 3),
+        return {"isDone" : (Object.keys(this.stateMapping).length < 3),
                 "reward" : 1};
     }
 
@@ -398,7 +431,7 @@ class ElectronicLife extends Environment {
      * @returns {number} the number of states in the world.
      */
     getNumberOfStates() {
-        return this.width * this.height;
+        return Object.keys(this.stateMapping).length;
     }
 
     /**
@@ -414,7 +447,14 @@ class ElectronicLife extends Environment {
     }
 
     getState(){
-        return 0;
+        debugger
+        let sum = this.plantN + this.plantEaterN + this.plantEaterEaterN;
+        let l = Math.round(100 * this.plantN / sum);
+        let m = Math.round(100 * this.plantEaterN / sum);
+        let n = 100 - m - l;
+        let key = l + "-" + m + "-" + n;
+        let state = this.stateMapping[key];
+        return state;
     }
 
     initEnvironment() {

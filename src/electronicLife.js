@@ -421,7 +421,11 @@ class ElectronicLife extends Environment {
 
         this.makeCensus();
 
-        return {"isDone" : (Object.keys(this.stateMapping).length < 3),
+        let done = (this.plantN == 0 ||
+                    this.plantEaterN == 0 ||
+                    this.plantEaterEaterN == 0);
+
+        return {"isDone" : done,
                 "reward" : 1};
     }
 

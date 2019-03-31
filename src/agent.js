@@ -37,8 +37,15 @@ class Agent {
         }   
         const argMaxActions = argMax(actionStateValue);
         if(Math.random() < epsilon) {
+
+            if(actionsIndex.length == 0) {
+                debugger
+            }
             return actionsIndex;
         } else {
+            if(argMaxActions.length == 0) {
+                debugger
+            }
             return argMaxActions;
         }
     }

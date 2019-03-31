@@ -62,7 +62,11 @@ function  getIcon(key){
 }
 function randomElement(array) 
 {
-  return array[Math.floor(Math.random() * array.length)];
+  let result = array[Math.floor(Math.random() * array.length)];
+  if(result==undefined){
+            debugger
+        }
+  return result;
 }  
 
 function randomInt(max) {

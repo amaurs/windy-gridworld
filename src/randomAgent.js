@@ -8,6 +8,7 @@ class RandomAgent extends Agent {
      */
     tick(environment) {
         const state = environment.getState();
+        console.log(state);
         const action = randomElement(this.epsilonGreedyPolicy(state, this.epsilon));
         const stepRes = environment.tick(action);
         return {"isDone" : stepRes.isDone,

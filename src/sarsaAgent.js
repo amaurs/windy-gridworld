@@ -19,7 +19,13 @@ class SarsaAgent extends Agent {
         const stepRes = environment.tick(action);
         const reward = stepRes.reward;
         const statePrime = environment.getState();
+
         const actionPrime = randomElement(this.epsilonGreedyPolicy(statePrime, this.epsilon));
+        
+        if(actionPrime==undefined){
+            debugger
+        }
+
         this.Q[this.indexStateAction(state, action)] = this.Q[this.indexStateAction(state, action)] + 
                                                        this.alpha * (reward + 
                                                                      this.gamma * this.Q[this.indexStateAction(statePrime, actionPrime)] -

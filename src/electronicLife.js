@@ -2,7 +2,24 @@ import { Environment } from './environment.js';
 import Vector from './vector.js';
 import { randomElement } from './util.js';
 
-const plan  =           ["#################################################",
+const plan  =           ["#########################",
+                         "#    #     #            #",
+                         "#                   $   #",
+                         "#     o   *    o        #",
+                         "#         *###          #",
+                         "# *       *#            #",
+                         "#   o        #     ##   #",
+                         "#          ###       #  #",
+                         "##                    # #",
+                         "###    o   *            #",
+                         "#                 $     #",
+                         "#  $ *                  #",
+                         "#    ####     *     o   #",
+                         "#    ##     *           #",
+                         "#########################"];
+
+
+const plan2  =           ["#################################################",
                          "#    #     #                                    #",
                          "#                      o    o                   #",
                          "#     o   *            o               o        #",
@@ -31,10 +48,25 @@ const plan  =           ["#################################################",
                          "#     #                                         #",
                          "#################################################"];
 
-const ACTIONS = [new Vector(0, 1), //DOWN
-                 new Vector(0, -1), //UP
-                 new Vector(-1, 0), //LEFT
-                 new Vector(1, 0)]; //RIGHT
+
+const ACTIONS = [{key: "Plant",
+                  value: 1},
+                 {key: "Plant",
+                  value: 0},
+                 {key: "Plant",
+                  value: -1},
+                 {key: "PlantEater",
+                  value: 1},
+                 {key: "PlantEater",
+                  value: 0},
+                 {key: "PlantEater",
+                  value: -1},
+                 {key: "PlantEaterEater",
+                  value: 1},
+                 {key: "PlantEaterEater",
+                  value: 0},
+                 {key: "PlantEaterEater",
+                  value: -1}];
 
 const directions = {
                       "n"  : new Vector( 0, -1),
@@ -46,6 +78,12 @@ const directions = {
                       "w"  : new Vector(-1,  0),
                       "nw" : new Vector(-1, -1),
                    };
+
+let reproduceLimits = {
+                        "Plant" : 15,
+                        "PlantEater" : 50,
+                        "PlantEaterEater" : 50
+                     }
 
 
 
@@ -81,8 +119,8 @@ function createStateMap3() {
     let count = 0;
     for(let i = 0; i < 100 + 1; i++) {
         for(let j = 0; j < i + 1; j++) {
-            count++;
             mapping[(100 - i) + "-" + (i - j) + "-" + j] = count;
+            count++;
         }
     }
     return mapping;
@@ -332,7 +370,7 @@ class Plant extends Critter {
     }
 
     act(context) {
-        if(this.energy > 15) {
+        if(this.energy > reproduceLimits[this.constructor.name]) {
             let space = context.find(" ");
             if(space) {
                 return {type: "reproduce", direction: space};
@@ -350,7 +388,7 @@ class Plant extends Critter {
 class PlantEater extends Critter {
     constructor() {
         super();
-        this.energy = 100;
+        this.energy = 50;
         this.food = "*";
         this.reproduceLimit = 60;
         this.speed = 3;
@@ -359,7 +397,7 @@ class PlantEater extends Critter {
     act(context) {
         let space = context.find(" ");
         let food = context.find(this.food);
-        if(this.energy > this.reproduceLimit && space)
+        if(this.energy > reproduceLimits[this.constructor.name] && space)
         {
             return {type: "reproduce", direction: space};
         }
@@ -381,7 +419,7 @@ class PlantEaterEater extends PlantEater {
         super();
         this.energy = 100;
         this.food = "o";
-        this.reproduceLimit = 40;
+        this.reproduceLimit = 60;
         this.speed = 2;
     }
 
@@ -417,16 +455,34 @@ class ElectronicLife extends Environment {
     }
 
     tick(actionIndex) {
+        
+        let action = ACTIONS[actionIndex];
+
+        console.log(actionIndex)
+        console.log(ACTIONS)
+        console.log(reproduceLimits);
+        let latest = reproduceLimits[action.key];
+
+        latest += action.value;
+
+        if(!(latest < 1)) {
+            reproduceLimits[action.key] += action.value;
+        }
+
+        
+
         this.world.turn();
 
         this.makeCensus();
+
+
 
         let done = (this.plantN == 0 ||
                     this.plantEaterN == 0 ||
                     this.plantEaterEaterN == 0);
 
         return {"isDone" : done,
-                "reward" : 1};
+                "reward" : done?-10:.1};
     }
 
     /**
@@ -450,14 +506,19 @@ class ElectronicLife extends Environment {
         return this.world.toString();
     }
 
-    getState(){
-        debugger
-        let sum = this.plantN + this.plantEaterN + this.plantEaterEaterN;
-        let l = Math.round(100 * this.plantN / sum);
-        let m = Math.round(100 * this.plantEaterN / sum);
+    getState() {
+        let sum = 0;
+        sum = this.plantEaterEaterN + this.plantN + this.plantEaterN;
+        let l = Math.floor(100 * this.plantN / sum);
+        let m = Math.floor(100 * this.plantEaterN / sum);
         let n = 100 - m - l;
         let key = l + "-" + m + "-" + n;
         let state = this.stateMapping[key];
+
+        if(state == undefined) {
+            debugger
+        }
+
         return state;
     }
 
@@ -468,6 +529,12 @@ class ElectronicLife extends Environment {
                                               "$": PlantEaterEater,
                                               "*": Plant
                                               });
+
+        reproduceLimits = {
+                        "Plant" : 15,
+                        "PlantEater" : 50,
+                        "PlantEaterEater" : 50
+                        };
     }
 
 }
